@@ -33,7 +33,10 @@ const New: React.FC<NewProps> = ({}) => {
 
     const passwordValues: PasswordValues = { newPassword: ''}
     const passwordSchema = Yup.object().shape({
-        newPassword: Yup.string().required('Password cannot be empty or whitespace').min(6, 'Password must be between 6 and 100 characters long').max(100, 'Password must be between 6 and 100 characters long')
+        newPassword: Yup.string().required('Password cannot be empty or whitespace').matches(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+            "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+          )
         .notOneOf([Yup.ref('oldPassword')], 'New password cannot be same as old password')
     })
     const submitNewPassword = async (values: PasswordValues, helpers: FormikHelpers<PasswordValues>) => {

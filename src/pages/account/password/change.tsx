@@ -35,8 +35,14 @@ const Reset: React.FC<ResetProps> = ({}) => {
 
     const passwordValues: PasswordValues = { oldPassword: '', newPassword: '', confirmPassword: ''}
     const passwordSchema = Yup.object().shape({
-        oldPassword: Yup.string().required('Password cannot be empty or whitespace').min(6, 'Password must be between 6 and 100 characters long').max(100, 'Password must be between 6 and 100 characters long'),
-        newPassword: Yup.string().required('Password cannot be empty or whitespace').min(6, 'Password must be between 6 and 100 characters long').max(100, 'Password must be between 6 and 100 characters long')
+        oldPassword: Yup.string().required('Password cannot be empty or whitespace').matches(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+            "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+          ),
+        newPassword: Yup.string().required('Password cannot be empty or whitespace').matches(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+            "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+          )
         .notOneOf([Yup.ref('oldPassword')], 'New password cannot be same as old password'),
         confirmPassword: Yup.string()
         .oneOf([Yup.ref('newPassword')], 'Password must match')

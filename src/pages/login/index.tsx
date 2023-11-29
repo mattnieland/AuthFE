@@ -50,7 +50,10 @@ const Login: React.FC<LoginProps> = ({}) => {
     const loginValues: LoginValues = { email: '', password: '' }
     const loginSchema = Yup.object().shape({
         email: Yup.string().email('Email should be email').required('Email cannot be empty or whitespace'),
-        password: Yup.string().required('Password cannot be empty or whitespace').min(6, 'Password must be between 6 and 100 characters long').max(100, 'Password must be between 6 and 100 characters long')
+        password: Yup.string().required('Password cannot be empty or whitespace').matches(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+            "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+          )
     })
     const submitLoginForm = async (values: LoginValues, helpers: FormikHelpers<LoginValues>) => {
         console.log(values)
@@ -82,7 +85,10 @@ const Login: React.FC<LoginProps> = ({}) => {
     }
     const registerSchema = Yup.object().shape({
         email: Yup.string().email('Email should be email').required('Email cannot be empty or whitespace'),
-        password: Yup.string().required('Password cannot be empty or whitespace').min(6, 'Password must be between 6 and 100 characters long').max(100, 'Password must be between 6 and 100 characters long'),
+        password: Yup.string().required('Password cannot be empty or whitespace').matches(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+            "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+          ),
         firstName: Yup.string().required('First name cannot be empty or whitespace').min(2, 'First name must be between 3 and 30 characters long').max(30, 'First name must be between 3 and 30 characters long'),
         lastName: Yup.string().required('Last name cannot be empty or whitespace').min(3, 'Last name must be between 3 and 50 characters long').max(50, 'Last name must be between 3 and 50 characters long'),
     })
